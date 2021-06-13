@@ -1,0 +1,38 @@
+{
+    "credit": "Made with Blockbench",
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "cursedweirdos:item/totem_of_lying"
+    },
+    "display": {
+        "thirdperson_righthand": {
+            "translation": [
+                0,
+                2.25,
+                0
+            ],
+            "scale": [
+                0.75,
+                0.9,
+                1
+            ]
+        },
+        "firstperson_righthand": {
+            "rotation": [
+                0,
+                0,
+                10
+            ],
+            "translation": [
+                0.5,
+                4.25,
+                0
+            ],
+            "scale": [
+                0.75,
+                0.9,
+                1
+            ]
+        }
+    }
+}

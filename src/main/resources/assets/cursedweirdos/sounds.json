@@ -1,0 +1,13 @@
+{
+    "creamer_ambient": {
+        "sounds": [
+            "cursedweirdos:entity/happy_girl"
+        ]
+    },
+    "creamer_hurt": {
+        "sounds": [
+            "cursedweirdos:entity/hurt_girl"
+        ]
+    }
+}
+

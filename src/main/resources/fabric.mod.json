@@ -1,19 +1,19 @@
 {
     "schemaVersion": 1,
-    "id": "example",
-    "name": "Example Mod",
+    "id": "cursedweirdos",
+    "name": "Cursed Weirdos Mod",
     "version": "$version",
     "entrypoints": {
         "main": [
             {
                 "adapter": "kotlin",
-                "value": "com.theoparis.example.ExampleMod"
+                "value": "com.theoparis.cw.CursedWeirdosMod"
             }
         ],
         "client": [
             {
                 "adapter": "kotlin",
-                "value": "com.theoparis.example.ExampleClient"
+                "value": "com.theoparis.cw.CursedWeirdosClient"
             }
         ]
     },
