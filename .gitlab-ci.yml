@@ -5,7 +5,8 @@ cache:
         - .gradle/wrapper
         - .gradle/caches
 build:
-    stage: build
+    only:
+        - 1.16.5
     script:
         - chmod +x ./gradlew
         - ./gradlew build
@@ -14,8 +15,6 @@ build:
         paths:
             - build/libs/*.jar
         expire_in: 1 week
-    only:
-        - master
 release:
     only:
         - tags
