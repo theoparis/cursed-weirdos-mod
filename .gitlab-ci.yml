@@ -1,0 +1,17 @@
+image: openjdk:16-alpine
+
+cache:
+    paths:
+        - .gradle/wrapper
+        - .gradle/caches
+build:
+    stage: build
+    script:
+        - ./gradlew build
+    # define path to collect artifacts
+    artifacts:
+        paths:
+            - build/libs/*.jar
+        expire_in: 1 week
+    only:
+        - master
