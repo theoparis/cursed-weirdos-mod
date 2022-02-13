@@ -5,11 +5,11 @@ import net.minecraft.client.MinecraftClient
 import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.render.model.json.ModelTransformation
 import net.minecraft.client.util.math.MatrixStack
-import net.minecraft.client.util.math.Vector3f
 import net.minecraft.entity.LivingEntity
+import net.minecraft.util.math.Vec3f
 import software.bernie.geckolib3.core.IAnimatable
 
-class HeldItemFeature<T>(private val translation: Vector3f) :
+class HeldItemFeature<T>(private val translation: Vec3f) :
     AnimatedFeatureRenderer<T> where T : IAnimatable, T : LivingEntity {
     private val mc = MinecraftClient.getInstance()
 
@@ -33,7 +33,8 @@ class HeldItemFeature<T>(private val translation: Vector3f) :
             provider,
             entity.world,
             light,
-            overlay
+            overlay,
+            0
         )
         matrices?.pop()
 /*        mc.itemRenderer.renderItem(

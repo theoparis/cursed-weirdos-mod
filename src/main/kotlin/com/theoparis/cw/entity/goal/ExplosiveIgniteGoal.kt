@@ -4,7 +4,7 @@ import com.theoparis.cw.entity.util.IExplosiveEntity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.ai.goal.Goal
 import net.minecraft.entity.mob.MobEntity
-import java.util.EnumSet
+import java.util.*
 
 class ExplosiveIgniteGoal(private val entity: MobEntity) : Goal() {
     private var target: LivingEntity? = null

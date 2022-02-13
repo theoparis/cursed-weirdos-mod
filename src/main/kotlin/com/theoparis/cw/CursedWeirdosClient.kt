@@ -3,8 +3,8 @@ package com.theoparis.cw
 import com.theoparis.cw.entity.render.CreamerEntityRenderer
 import com.theoparis.cw.entity.render.ImposterEntityRenderer
 import net.fabricmc.api.ClientModInitializer
-import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry
-import net.minecraft.client.render.entity.EntityRenderDispatcher
+import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
+import net.minecraft.client.render.entity.EntityRendererFactory
 import org.apache.logging.log4j.LogManager
 import software.bernie.geckolib3.GeckoLib
 
@@ -20,19 +20,19 @@ class CursedWeirdosClient : ClientModInitializer {
         // Client-side initialization
         GeckoLib.initialize()
 
-        EntityRendererRegistry.INSTANCE.register(
+        EntityRendererRegistry.register(
             CursedWeirdosMod.creamerEntity
-        ) { dispatcher: EntityRenderDispatcher, _: EntityRendererRegistry.Context ->
+        ) { ctx: EntityRendererFactory.Context ->
             CreamerEntityRenderer(
-                dispatcher
+                ctx
             )
         }
 
-        EntityRendererRegistry.INSTANCE.register(
+        EntityRendererRegistry.register(
             CursedWeirdosMod.imposterEntity
-        ) { dispatcher: EntityRenderDispatcher, _: EntityRendererRegistry.Context ->
+        ) { ctx: EntityRendererFactory.Context ->
             ImposterEntityRenderer(
-                dispatcher
+                ctx
             )
         }
     }

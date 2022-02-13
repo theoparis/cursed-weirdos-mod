@@ -6,16 +6,16 @@ import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.client.render.VertexConsumer
 import net.minecraft.client.render.VertexConsumerProvider
-import net.minecraft.client.render.entity.EntityRenderDispatcher
+import net.minecraft.client.render.entity.EntityRendererFactory
 import net.minecraft.client.util.math.MatrixStack
-import net.minecraft.client.util.math.Vector3f
 import net.minecraft.util.math.MathHelper
-import software.bernie.geckolib3.renderer.geo.GeoEntityRenderer
+import net.minecraft.util.math.Vec3f
+import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer
 
 @Environment(EnvType.CLIENT)
-class CreamerEntityRenderer(entityRenderDispatcher: EntityRenderDispatcher) :
+class CreamerEntityRenderer(ctx: EntityRendererFactory.Context) :
     GeoEntityRenderer<CreamerEntity>(
-        entityRenderDispatcher,
+        ctx,
         CreamerModel()
     ) {
 
@@ -23,8 +23,8 @@ class CreamerEntityRenderer(entityRenderDispatcher: EntityRenderDispatcher) :
         shadowRadius = 0.5f
     }
 
-    fun getScale(animatable: CreamerEntity?, partialTicks: Float): Vector3f {
-        if (animatable == null) return Vector3f()
+    fun getScale(animatable: CreamerEntity?, partialTicks: Float): Vec3f {
+        if (animatable == null) return Vec3f()
         var g: Float = animatable.getClientFuseTime(partialTicks)
         val h = 1.0f + MathHelper.sin(g * 100.0f) * g * 0.01f
         g = MathHelper.clamp(g, 0.0f, 1.0f)
@@ -32,7 +32,7 @@ class CreamerEntityRenderer(entityRenderDispatcher: EntityRenderDispatcher) :
         g *= g
         val i = (1.0f + g * 0.4f) * h
         val j = (1.0f + g * 0.1f) / h
-        return Vector3f(i, j, i)
+        return Vec3f(i, j, i)
     }
 
     override fun renderEarly(

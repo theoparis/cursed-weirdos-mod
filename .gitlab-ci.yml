@@ -1,4 +1,4 @@
-image: openjdk:16-alpine
+image: openjdk:19-jdk-alpine
 
 stages:
     - build
@@ -11,7 +11,7 @@ cache:
 build:
     stage: build
     only:
-        - 1.16.5
+        - "1.18"
     script:
         - chmod +x ./gradlew
         - ./gradlew build

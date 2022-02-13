@@ -1,8 +1,8 @@
 import java.util.Properties
 
 plugins {
-    kotlin("jvm") version "1.4.32"
-    id("fabric-loom") version "0.8-SNAPSHOT"
+    kotlin("jvm") version "1.6.10"
+    id("fabric-loom") version "0.10-SNAPSHOT"
 }
 
 java {
@@ -33,9 +33,6 @@ repositories {
     maven("https://maven.fabricmc.net/") {
         name = "Fabric"
     }
-    maven("https://kotlin.bintray.com/kotlinx") {
-        name = "Kotlinx"
-    }
     mavenLocal()
     mavenCentral()
     maven("https://jitpack.io")
@@ -47,13 +44,12 @@ minecraft {
 
 dependencies {
     minecraft(group = "com.mojang", name = "minecraft", version = minecraftVersion)
-    mappings(group = "net.fabricmc", name = "yarn", version = minecraftVersion + "+build.9", classifier = "v2")
+    mappings(group = "net.fabricmc", name = "yarn", version = minecraftVersion + "+build.22", classifier = "v2")
 
-//    modImplementation("com.theoparis:creepinoutils-fabric:1.16-1.0.0")
-    modImplementation("net.fabricmc:fabric-loader:0.11.5")
-    modImplementation("net.fabricmc.fabric-api:fabric-api:0.35.0+1.16")
-    modImplementation("net.fabricmc:fabric-language-kotlin:1.6.1+kotlin.1.5.10")
-    modImplementation("software.bernie.geckolib:geckolib-fabric-1.16.5:3.0.40:dev")
+    modImplementation("net.fabricmc:fabric-loader:0.13.2")
+    modImplementation("net.fabricmc.fabric-api:fabric-api:0.46.4+1.18")
+    modImplementation("net.fabricmc:fabric-language-kotlin:1.7.1+kotlin.1.6.10")
+    modImplementation("software.bernie.geckolib:geckolib-fabric-1.18:3.0.31")
 }
 
 val fabricApiVersion = ""

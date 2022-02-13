@@ -2,15 +2,15 @@ package com.theoparis.cw.entity.render.base
 
 import net.minecraft.client.render.VertexConsumer
 import net.minecraft.client.render.VertexConsumerProvider
-import net.minecraft.client.render.entity.EntityRenderDispatcher
+import net.minecraft.client.render.entity.EntityRendererFactory
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.entity.LivingEntity
 import software.bernie.geckolib3.core.IAnimatable
 import software.bernie.geckolib3.model.AnimatedGeoModel
-import software.bernie.geckolib3.renderer.geo.GeoEntityRenderer
+import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer
 
-open class AnimatedEntityRenderer<T>(renderManager: EntityRenderDispatcher, modelProvider: AnimatedGeoModel<T>) :
-    GeoEntityRenderer<T>(renderManager, modelProvider) where
+open class AnimatedEntityRenderer<T>(ctx: EntityRendererFactory.Context, modelProvider: AnimatedGeoModel<T>) :
+    GeoEntityRenderer<T>(ctx, modelProvider) where
 T : LivingEntity,
 T : IAnimatable {
     private val features = mutableListOf<AnimatedFeatureRenderer<T>>()

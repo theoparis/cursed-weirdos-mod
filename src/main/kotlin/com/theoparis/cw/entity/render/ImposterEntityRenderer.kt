@@ -6,21 +6,20 @@ import com.theoparis.cw.entity.render.base.feature.HeldItemFeature
 import com.theoparis.cw.entity.render.model.ImposterModel
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.minecraft.client.render.entity.EntityRenderDispatcher
-import net.minecraft.client.util.math.Vector3f
+import net.minecraft.client.render.entity.EntityRendererFactory
+import net.minecraft.util.math.Vec3f
 
 @Environment(EnvType.CLIENT)
-class ImposterEntityRenderer(entityRenderDispatcher: EntityRenderDispatcher) :
+class ImposterEntityRenderer(ctx:  EntityRendererFactory.Context) :
     AnimatedEntityRenderer<ImposterEntity>(
-        entityRenderDispatcher,
+        ctx,
         ImposterModel()
     ) {
 
     init {
         shadowRadius = 0.5f
-        addFeature(HeldItemFeature(Vector3f(0.5f, 0.5f, 0f)))
+        addFeature(HeldItemFeature(Vec3f(0.5f, 0.5f, 0f)))
     }
 
-    companion object {
-    }
+    companion object
 }

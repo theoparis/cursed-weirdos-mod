@@ -3,13 +3,7 @@ package com.theoparis.cw.entity
 import com.theoparis.cw.CursedWeirdosMod
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.EquipmentSlot
-import net.minecraft.entity.ai.goal.FollowTargetGoal
-import net.minecraft.entity.ai.goal.LookAroundGoal
-import net.minecraft.entity.ai.goal.LookAtEntityGoal
-import net.minecraft.entity.ai.goal.MeleeAttackGoal
-import net.minecraft.entity.ai.goal.RevengeGoal
-import net.minecraft.entity.ai.goal.SwimGoal
-import net.minecraft.entity.ai.goal.WanderAroundFarGoal
+import net.minecraft.entity.ai.goal.*
 import net.minecraft.entity.attribute.DefaultAttributeContainer
 import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.entity.damage.DamageSource
@@ -39,7 +33,7 @@ class ImposterEntity(entityType: EntityType<out HostileEntity>?, world: World?) 
         goalSelector.add(6, LookAroundGoal(this))
         targetSelector.add(
             1,
-            FollowTargetGoal(
+            ActiveTargetGoal(
                 this,
                 PlayerEntity::class.java, true
             )
@@ -65,9 +59,8 @@ class ImposterEntity(entityType: EntityType<out HostileEntity>?, world: World?) 
             AnimationController(
                 this,
                 "controller",
-                0f,
-                { ev -> predicate(ev) }
-            )
+                0f
+            ) { ev -> predicate(ev) }
         )
     }
 

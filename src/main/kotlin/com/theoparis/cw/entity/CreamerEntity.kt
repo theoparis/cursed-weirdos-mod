@@ -14,14 +14,7 @@ import net.minecraft.entity.AreaEffectCloudEntity
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LightningEntity
-import net.minecraft.entity.ai.goal.FleeEntityGoal
-import net.minecraft.entity.ai.goal.FollowTargetGoal
-import net.minecraft.entity.ai.goal.LookAroundGoal
-import net.minecraft.entity.ai.goal.LookAtEntityGoal
-import net.minecraft.entity.ai.goal.MeleeAttackGoal
-import net.minecraft.entity.ai.goal.RevengeGoal
-import net.minecraft.entity.ai.goal.SwimGoal
-import net.minecraft.entity.ai.goal.WanderAroundFarGoal
+import net.minecraft.entity.ai.goal.*
 import net.minecraft.entity.attribute.DefaultAttributeContainer
 import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.entity.damage.DamageSource
@@ -34,7 +27,7 @@ import net.minecraft.entity.passive.CatEntity
 import net.minecraft.entity.passive.OcelotEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Items
-import net.minecraft.nbt.CompoundTag
+import net.minecraft.nbt.NbtCompound
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundEvent
@@ -82,7 +75,7 @@ class CreamerEntity(entityType: EntityType<out HostileEntity>, world: World) :
         goalSelector.add(6, LookAroundGoal(this))
         targetSelector.add(
             1,
-            FollowTargetGoal(
+            ActiveTargetGoal(
                 this,
                 PlayerEntity::class.java, true
             )
@@ -94,8 +87,8 @@ class CreamerEntity(entityType: EntityType<out HostileEntity>, world: World) :
         return if (target == null) 3 else 3 + (this.health - 1.0f).toInt()
     }
 
-    override fun handleFallDamage(fallDistance: Float, damageMultiplier: Float): Boolean {
-        val bl = super.handleFallDamage(fallDistance, damageMultiplier)
+    override fun handleFallDamage(fallDistance: Float, damageMultiplier: Float, source: DamageSource): Boolean {
+        val bl = super.handleFallDamage(fallDistance, damageMultiplier, source)
         currentFuseTime = (currentFuseTime.toFloat() + fallDistance * 1.5f).toInt()
         if (currentFuseTime > fuseTime - 5) {
             currentFuseTime = fuseTime - 5
@@ -110,8 +103,8 @@ class CreamerEntity(entityType: EntityType<out HostileEntity>, world: World) :
         dataTracker.startTracking(IGNITED, false)
     }
 
-    override fun writeCustomDataToTag(tag: CompoundTag) {
-        super.writeCustomDataToTag(tag)
+    override fun writeCustomDataToNbt(tag: NbtCompound) {
+        super.writeCustomDataToNbt(tag)
         if (dataTracker.get(CHARGED) as Boolean)
             tag.putBoolean("powered", true)
 
@@ -120,8 +113,8 @@ class CreamerEntity(entityType: EntityType<out HostileEntity>, world: World) :
         tag.putBoolean("ignited", ignited)
     }
 
-    override fun readCustomDataFromTag(tag: CompoundTag) {
-        super.readCustomDataFromTag(tag)
+    override fun readCustomDataFromNbt(tag: NbtCompound) {
+        super.readCustomDataFromNbt(tag)
         dataTracker.set(CHARGED, tag.getBoolean("powered"))
         if (tag.contains("fuse", 99))
             fuseTime = tag.getShort("fuse").toInt()
@@ -232,7 +225,7 @@ class CreamerEntity(entityType: EntityType<out HostileEntity>, world: World) :
             val f = if (shouldRenderOverlay()) 2.0f else 1.0f
             dead = true
             world.createExplosion(this, this.x, this.y, this.z, explosionRadius.toFloat() * f, destructionType)
-            this.remove()
+            this.remove(RemovalReason.KILLED)
             spawnEffectsCloud()
         }
     }
@@ -242,13 +235,11 @@ class CreamerEntity(entityType: EntityType<out HostileEntity>, world: World) :
         if (!collection.isEmpty()) {
             val areaEffectCloudEntity = AreaEffectCloudEntity(world, this.x, this.y, this.z)
             areaEffectCloudEntity.radius = 2.5f
-            areaEffectCloudEntity.setRadiusOnUse(-0.5f)
-            areaEffectCloudEntity.setWaitTime(10)
+            areaEffectCloudEntity.radiusOnUse = -0.5f
+            areaEffectCloudEntity.waitTime = 10
             areaEffectCloudEntity.duration = areaEffectCloudEntity.duration / 2
-            areaEffectCloudEntity.setRadiusGrowth(
-                -areaEffectCloudEntity.radius / areaEffectCloudEntity.duration
-                    .toFloat()
-            )
+            areaEffectCloudEntity.radiusGrowth = -areaEffectCloudEntity.radius / areaEffectCloudEntity.duration
+                .toFloat()
             val var3: Iterator<*> = collection.iterator()
             while (var3.hasNext()) {
                 val statusEffectInstance = var3.next() as StatusEffectInstance
@@ -297,9 +288,8 @@ class CreamerEntity(entityType: EntityType<out HostileEntity>, world: World) :
             AnimationController(
                 this,
                 "controller",
-                0f,
-                { ev -> predicate(ev) }
-            )
+                0f
+            ) { ev -> predicate(ev) }
         )
     }
 
