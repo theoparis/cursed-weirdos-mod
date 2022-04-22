@@ -1,20 +1,13 @@
-# Ignore everything
-/*
+*.env*
+*.log*
+*.DS_Store*
+!*.example*
+build/
+bin/
+out/
+target/
+.gradle/
+.cache/
+.idea/
+.vscode/
 
-# Folders
-!gradle
-!buildSrc
-!src
-
-# Files
-!.gitattributes
-!.gitignore
-!build.gradle.kts
-!gradle.properties
-!gradlew
-!gradlew.bat
-!Jenkinsfile
-!LICENSE
-!README.md
-!settings.gradle.kts
-!.gitlab-ci.yml
