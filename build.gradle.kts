@@ -1,7 +1,7 @@
 import java.util.Properties
 
 plugins {
-    kotlin("jvm") version "1.6.10"
+    kotlin("jvm") version "1.6.21"
     id("fabric-loom") version "0.10-SNAPSHOT"
 }
 
@@ -49,7 +49,7 @@ dependencies {
     modImplementation("net.fabricmc:fabric-loader:0.13.2")
     modImplementation("net.fabricmc.fabric-api:fabric-api:0.46.4+1.18")
     modImplementation("net.fabricmc:fabric-language-kotlin:1.7.1+kotlin.1.6.10")
-    modImplementation("software.bernie.geckolib:geckolib-fabric-1.18:3.0.31")
+    modImplementation("software.bernie.geckolib:geckolib-fabric-1.18:3.0.93")
 }
 
 val fabricApiVersion = ""
